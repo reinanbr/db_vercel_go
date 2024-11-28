@@ -139,7 +139,7 @@ func read(w http.ResponseWriter,r*http.Request){
 	infoAccess,err := access_site_model.ReadAccessSites(pool)
 	if err == nil{
 		w.Header().Set("Content-Type", "application/json")
-		if errJson := json.NewEncoder(w).Encode(infoAccess); err != nil {
+		if errJson := json.NewEncoder(w).Encode(infoAccess); errJson != nil {
 			http.Error(w, "Erro ao gerar o JSON", http.StatusInternalServerError)
 			log.Printf("Erro ao codificar JSON: %v", errJson)
 	}
@@ -165,7 +165,7 @@ func main() {
 	http.HandleFunc("/receive-data", handler)
 	http.HandleFunc("/read",read)
 	http.HandleFunc("/",index)
-	fmt.Println("Servidor rodando na porta 8080...")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	fmt.Println("Servidor rodando...")
+	//log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
