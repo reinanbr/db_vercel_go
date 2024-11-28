@@ -151,7 +151,7 @@ func read(w http.ResponseWriter,r*http.Request){
 
 
 func index(w http.ResponseWriter, r *http.Request) {
-	response := Response{
+	response := ResponseIndex{
 		Message:   "Estamos online",
 		Timestamp: time.Now().Format(time.RFC3339),
 	}
@@ -164,7 +164,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 func main() {
 	http.HandleFunc("/receive-data", handler)
 	http.HandleFunc("/read",read)
-	http.HandleFunc(("/",index))
+	http.HandleFunc("/",index)
 	fmt.Println("Servidor rodando na porta 8080...")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
