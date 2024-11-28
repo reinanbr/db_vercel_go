@@ -12,6 +12,10 @@ import (
 	"routes_api_go/models"
 )
 
+type ResponseIndex struct {
+	Message   string `json:"message"`
+	Timestamp string `json:"timestamp"`
+}
 
 type Response struct {
 	Saved bool `json:"saved"`
@@ -145,9 +149,22 @@ func read(w http.ResponseWriter,r*http.Request){
 }
 
 
+
+func index(w http.ResponseWriter, r *http.Request) {
+	response := Response{
+		Message:   "Estamos online",
+		Timestamp: time.Now().Format(time.RFC3339),
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(response)
+}
+
+
 func main() {
 	http.HandleFunc("/receive-data", handler)
 	http.HandleFunc("/read",read)
+	http.HandleFunc(("/",index))
 	fmt.Println("Servidor rodando na porta 8080...")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
